@@ -12,34 +12,20 @@ const positions = [];
 const visualRange = 100;
 
 const init = () => {
-	const body = document.body;
-	const html = document.documentElement;
-
-	canvas.width = document.innerWidth;
-	canvas.height = Math.max(
-		body.scrollHeight,
-		body.offsetHeight,
-		html.clientHeight,
-		html.scrollHeight,
-		html.offsetHeight
-	);
-
-	// Get the DPR and size of the canvas
-	const dpr = window.devicePixelRatio;
-	let rect = mainElement.getBoundingClientRect();
-	rect.width + navElement.getBoundingClientRect().width;
-	rect.height + navElement.getBoundingClientRect().height;
-
-	// Set the "actual" size of the canvas
-	canvas.width = rect.width * dpr;
-	canvas.height = rect.height * dpr;
-
-	// Scale the context to ensure correct drawing operations
-	ctx.scale(dpr, dpr);
-
-	// Set the "drawn" size of the canvas
-	canvas.style.width = `${rect.width}px`;
-	canvas.style.height = '100vh';
+	const width = window.innerWidth;
+	const height = window.innerHeight;
+	
+	// 1. Multiply the canvas's width and height by the devicePixelRatio
+	const ratio = window.devicePixelRatio || 1
+	canvas.width = width * ratio
+	canvas.height = height * ratio
+	
+	// 2. Force it to display at the original (logical) size with CSS or style attributes
+	canvas.style.width = width + 'px'
+	canvas.style.height = height + 'px'
+	
+	// 3. Scale the context so you can draw on it without considering the ratio.
+	ctx.scale(ratio, ratio)
 
 	// Initialize points on the canvas
 	for (let index = 0; index < 1200; index++) {
@@ -52,14 +38,13 @@ const init = () => {
 const createPoint = () => {
 	let color = colors[Math.floor(Math.random() * colors.length)];
 	positions.push({
-		x: randomFloat(0, canvas.width),
-		y: randomFloat(0, canvas.width),
+		x: randomFloat(0, canvas.width / 2),
+		y: randomFloat(0, canvas.height / 2),
 		dx: randomFloat(-5, 5),
 		dy: randomFloat(-5, 5),
 		scale: randomFloat(1, 5),
 		initialColor: color,
 		color: color,
-		changedColor: false,
 	});
 }
 
@@ -90,11 +75,14 @@ const moveTowardsCenter = (point) => {
 
 		point.dx += (centerX - point.x) * factor;
 		point.dy += (centerY - point.y) * factor;
+
+		//point.dx += ((canvas.width / 2) - point.x) * 0.005;
+		//point.dy += ((canvas.height / 2) - point.y) * 0.005;
 	}
 };
 
 const matchVelocity = (point) => {
-	const matchingFactor = 0.01; // Adjust by this % of average velocity
+	const matchingFactor = 0.02; // Adjust by this % of average velocity
 
 	let avgDX = 0;
 	let avgDY = 0;
@@ -141,15 +129,31 @@ const distance = (point1, point2) => {
 };
 
 const keepWithinBounds = (point) => {
-	const width = canvas.width;
-	const height = canvas.height;
+	const margin = 100;
+	const turnFactor = 1;
 
-	point.x = Math.min(Math.max(point.x, -5), width + 5);
-	point.y = Math.min(Math.max(point.y, -5), height + 5);
+	const width = canvas.width / 2;
+	const height = canvas.height / 2;
+
+	//point.x = Math.min(Math.max(point.x, -5), width + 5);
+	//point.y = Math.min(Math.max(point.y, -5), height + 5);
+  
+	if (point.x < margin) {
+	  point.dx += turnFactor;
+	}
+	if (point.x > width - margin) {
+	  point.dx -= turnFactor
+	}
+	if (point.y < margin) {
+	  point.dy += turnFactor;
+	}
+	if (point.y > height - margin) {
+	  point.dy -= turnFactor;
+	}
 };
 
 const avoidOthers = (point) => {
-	const minDistance = 50;
+	const minDistance = 35;
 	const avoidFactor = 0.02; // Adjust velocity by this %
 	let moveX = 0;
 	let moveY = 0;
@@ -167,7 +171,7 @@ const avoidOthers = (point) => {
 };
 
 const matchGroups = (point) => {
-	const minDistance = 50;
+	const minDistance = 80;
 
 	let neighbours = [];
 	neighbours.push(point);
@@ -180,12 +184,13 @@ const matchGroups = (point) => {
 		}
 	}
 
+	point.color = point.initialColor;
 	for (let neighbour of neighbours) {
 		neighbour.color = point.color;
-
-		neighbour.changedColor = true;
 	}
 }
+
+var counter = 0;
 
 const gameLoop = () => {
 	var lastTime = 0;
@@ -205,9 +210,17 @@ const gameLoop = () => {
 			lastTime = now;
 		}
 
+		counter++;
+
 		for (let i = 0; i < positions.length; i++) {
 			let point = positions[i];
-			point.changedColor = false;
+
+			if (counter >= 100) {
+				point.color = point.initialColor;
+				point.initialColor = colors[Math.floor(Math.random() * colors.length)];
+				counter = 0;
+			}
+
 			moveTowardsCenter(point);
 			matchGroups(point);
 			matchVelocity(point);
