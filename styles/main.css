@@ -1,0 +1,47 @@
+main {
+	width: 100%;
+	height: calc(100vh - 5rem);
+}
+
+.center-modal {
+	width: 100%;
+	height: calc(100vh - 5rem);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	padding-top: 5rem;
+
+	font-family: "Rubik", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
+	mix-blend-mode:exclusion;
+}
+
+.portrait-card {
+	border-radius: 1rem;
+	padding: 1rem;
+}
+
+.portrait-card > * {
+	text-align: left;
+}
+
+.portrait-card > h2 {
+	font-size: 10rem;
+}
+
+
+@media (max-width: 767px) {
+	.center-modal {
+		height: 80vh;
+
+		padding-top: 0;
+	}
+	
+	.portrait-card > h2 {
+		font-size: 3rem;
+	}
+}

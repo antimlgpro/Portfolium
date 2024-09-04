@@ -1,0 +1,52 @@
+#contact {
+	width: 100vw;
+	height: fit-content;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	padding: 1rem;
+	padding-top: 0;
+}
+
+.contact-links {
+	width: max-content;
+	
+	display: flex;
+	flex-direction: column;
+
+	gap: 2rem;
+}
+
+.contact-links > * {
+	width: 100%;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.contact-links > a > svg {
+	width: 2rem;
+	aspect-ratio: 1 / 1;
+}
+.contact-links > a > p {
+	opacity: 0.1;
+	text-align: center;
+}
+
+.contact-links > a > p:hover {
+	opacity: 1;
+}
+
+@media (max-width: 767px) {
+	#contact {
+		flex-direction: column;
+		height: max-content;
+	}
+	.contact-links {
+		text-align: left;
+	}
+}
