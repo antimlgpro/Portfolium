@@ -42,7 +42,7 @@ const createPoint = () => {
 		y: randomFloat(0, canvas.height / 2),
 		dx: randomFloat(-5, 5),
 		dy: randomFloat(-5, 5),
-		scale: randomFloat(1, 5),
+		scale: randomFloat(1, 2),
 		initialColor: color,
 		color: color,
 	});
@@ -76,8 +76,8 @@ const moveTowardsCenter = (point) => {
 		point.dx += (centerX - point.x) * factor;
 		point.dy += (centerY - point.y) * factor;
 
-		//point.dx += ((canvas.width / 2) - point.x) * 0.005;
-		//point.dy += ((canvas.height / 2) - point.y) * 0.005;
+		//point.dx += ((canvas.width / 2) - point.x) * 0.0005;
+		//point.dy += ((canvas.height / 2) - point.y) * 0.0005;
 	}
 };
 
@@ -154,7 +154,7 @@ const keepWithinBounds = (point) => {
 
 const avoidOthers = (point) => {
 	const minDistance = 35;
-	const avoidFactor = 0.02; // Adjust velocity by this %
+	const avoidFactor = 0.05; // Adjust velocity by this %
 	let moveX = 0;
 	let moveY = 0;
 	for (let otherPoint of positions) {
