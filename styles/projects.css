@@ -1,5 +1,5 @@
 #projects {
-	height: 90vh;
+	height: max(max-content, 90vh);
 }
 
 
@@ -79,6 +79,16 @@
 
 	.card-holder {
 		flex-direction: column;
+		height: fit-content;
+	}
+
+	.card {
+		width: auto;
+	}
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+	#projects {
 		height: fit-content;
 	}
 }

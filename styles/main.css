@@ -45,3 +45,9 @@ main {
 		font-size: 3rem;
 	}
 }
+
+@media (min-width: 768px) and (max-width: 979px) {
+	.portrait-card > h2 {
+		font-size: 7rem;
+	}
+}

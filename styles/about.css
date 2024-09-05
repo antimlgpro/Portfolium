@@ -44,6 +44,32 @@
 	height: 7rem;
 }
 
+@media (min-width: 768px) and (max-width: 979px) {
+	#about {
+		height: fit-content;
+		min-height: 0;
+	}
+
+	#about-container > div > img {
+		padding: 0;
+		aspect-ratio: 1 / 1;
+		object-fit: fill;
+	}
+
+	#about-container > div{
+		padding: 0;
+		height: auto;
+	}
+
+	#about-container {
+		min-height: max-content;
+	}
+
+	.about-spacer {
+		height: 3rem;
+	}
+}
+
 
 @media (max-width: 767px) {
 	#about {
