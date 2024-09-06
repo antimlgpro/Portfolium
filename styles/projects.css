@@ -22,7 +22,7 @@
 	padding: 1rem;
 
 	display: flex;
-	gap: 0.8rem;
+	gap: 0.4rem;
 	flex-direction: column;
 	justify-content: space-between;
 
@@ -51,6 +51,38 @@
 	font-weight: 300;
 	color: var(--soft-text-color);
 
+}
+
+.card-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.card-links > a {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+	width: max-content;
+}
+
+.card-links > a > svg {
+	height: 1.5rem;
+	aspect-ratio: 1 / 1;
+}
+
+.card-links > a > p {
+	font-size: 1.2rem;
+	font-weight: 300;
+}
+
+.card-links > a:hover {
+	text-decoration: underline;
+}
+
+.card:hover > .card-links > a > * {
+	mix-blend-mode: difference;
 }
 
 .card:hover > .card-subheader {

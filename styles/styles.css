@@ -38,8 +38,6 @@ nav {
 	flex-direction: row;
 
 	position: relative;
-
-	mix-blend-mode:exclusion;
 }
 
 .main-header > a {
