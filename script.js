@@ -28,8 +28,8 @@ self.onmessage = (e) => {
 	const createPoint = () => {
 		let color = colors[Math.floor(Math.random() * colors.length)];
 		positions.push({
-			x: randomFloat(0, canvas.width / 2),
-			y: randomFloat(0, canvas.height / 2),
+			x: randomFloat(0, canvas.width / ratio),
+			y: randomFloat(0, canvas.height / ratio),
 			dx: randomFloat(-5, 5),
 			dy: randomFloat(-5, 5),
 			scale: randomFloat(1, 2),
@@ -122,8 +122,8 @@ self.onmessage = (e) => {
 		const margin = 0;
 		const turnFactor = 1;
 
-		const width = canvas.width / 2;
-		const height = canvas.height / 2;
+		const width = canvas.width / ratio;
+		const height = canvas.height / ratio;
 
 		//point.x = Math.min(Math.max(point.x, -5), width + 5);
 		//point.y = Math.min(Math.max(point.y, -5), height + 5);
